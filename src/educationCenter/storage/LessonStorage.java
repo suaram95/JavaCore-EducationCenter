@@ -20,10 +20,23 @@ public class LessonStorage {
         lessons=tmp;
     }
 
+    public Lesson getByName(String name){
+        for (int i = 0; i < size; i++) {
+            if (lessons[i].getName().equals(name)){
+                return lessons[i];
+            }
+        }
+        return null;
+    }
+
     public void print(){
         for (int i = 0; i < size; i++) {
             System.out.println(lessons[i]);
         }
+    }
+
+    public boolean isEmpty(){
+        return size==0;
     }
 
 }

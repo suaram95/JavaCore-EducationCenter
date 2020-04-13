@@ -23,27 +23,42 @@ public class EducationCenterMain implements Commands {
                     break;
                 case ADD_LESSON:
                     addLesson();
-                    //todo
                     break;
                 case ADD_STUDENT:
-                    //todo
+                    addStudent();
                     break;
                 case PRINT_STUDENTS:
-                    //todo
+                    studentStorage.print();
                     break;
                 case PRINT_LESSONS:
-                    //todo
+                    lessonStorage.print();
                     break;
                 case CHANGE_STUDENT_LESSON:
-                    //todo
+                    changeStudentLesson();
                     break;
                 case PRINT_STUDENTS_BY_LESSON_NAME:
-                    //todo
+                    printStudentsByLessonName();
                     break;
                 default:
                     System.out.println("Wrong Command!!");
             }
         }
+    }
+
+    private static void printStudentsByLessonName() {
+        //todo
+    }
+
+    private static void changeStudentLesson() {
+        //todo
+    }
+
+    private static void addStudent() {
+        //todo
+    }
+
+    private static void addLesson() {
+        //todo
     }
 
     private static void printCommands() {
@@ -56,8 +71,7 @@ public class EducationCenterMain implements Commands {
         System.out.println("Please Input " + PRINT_STUDENTS_BY_LESSON_NAME + " PRINT STUDENTS BY LESSON NAME");
     }
 
-    private static void addLesson() {
-    }
+
 
 
 }
