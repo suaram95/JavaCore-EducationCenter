@@ -30,7 +30,7 @@ public class StudentStorage {
         return null;
     }
 
-    public void PrintByLesson(Lesson byName){
+    public void printByLesson(Lesson byName){
         for (int i = 0; i < size; i++) {
             for (Lesson lesson:students[i].getLessons()) {
                 if (lesson.equals(byName)){
