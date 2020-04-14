@@ -1,5 +1,6 @@
 package educationCenter.storage;
 
+import educationCenter.exception.DuplicateLessonException;
 import educationCenter.model.Lesson;
 
 public class LessonStorage {
@@ -7,7 +8,10 @@ public class LessonStorage {
     private Lesson[] lessons = new Lesson[10];
     private int size = 0;
 
-    public void add(Lesson lesson){
+    public void add(Lesson lesson) throws DuplicateLessonException {
+        if (getByName(lesson.getName())!=null){
+            throw  new DuplicateLessonException("Lesson with name: "+"<"+lesson.getName()+">"+" already exists!");
+        }
         if (size==lessons.length){
             extend();
         }

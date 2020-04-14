@@ -1,5 +1,6 @@
 package educationCenter.storage;
 
+import educationCenter.exception.DuplicateStudentException;
 import educationCenter.model.Lesson;
 import educationCenter.model.Student;
 
@@ -8,7 +9,10 @@ public class StudentStorage {
     private Student[] students = new Student[10];
     private int size = 0;
 
-    public void add(Student student) {
+    public void add(Student student) throws DuplicateStudentException {
+        if (getByEmail(student.getEmail())!=null){
+            throw new DuplicateStudentException("Student by email:"+"<"+student.getEmail()+">"+" already exists!!");
+        }
         if (size == students.length) {
             extend();
         }

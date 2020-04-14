@@ -1,5 +1,7 @@
 package educationCenter;
 
+import educationCenter.exception.DuplicateLessonException;
+import educationCenter.exception.DuplicateStudentException;
 import educationCenter.model.Lesson;
 import educationCenter.model.Student;
 import educationCenter.storage.LessonStorage;
@@ -17,7 +19,13 @@ public class EducationCenterMain implements Commands {
         boolean isRun = true;
         while (isRun) {
             printCommands();
-            int command = Integer.parseInt(scanner.nextLine());
+            int command;
+            try {
+                command = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Please input number!");
+                command = -1;
+            }
             switch (command) {
                 case EXIT:
                     isRun = false;
@@ -59,13 +67,11 @@ public class EducationCenterMain implements Commands {
 
     private static void addLesson() {
         System.out.println("Please input lesson data /Name, Lecturer Name, Duration, Price/");
-        String lessonDataStr = scanner.nextLine();
-        String[] lessonData = lessonDataStr.split(",");
-        Lesson byName = lessonStorage.getByName(lessonData[0]);
-        if (byName != null) {
-            System.out.println("Duplicate lesson!");
-            addLesson();
-        } else {
+        try {
+            String lessonDataStr = scanner.nextLine();
+            String[] lessonData = lessonDataStr.split(",");
+            Lesson byName = lessonStorage.getByName(lessonData[0]);
+
             Lesson lesson = new Lesson();
             lesson.setName(lessonData[0]);
             lesson.setLecturerName(lessonData[1]);
@@ -73,6 +79,12 @@ public class EducationCenterMain implements Commands {
             lesson.setPrice(Double.parseDouble(lessonData[3]));
             lessonStorage.add(lesson);
             System.out.println("Lesson was added!");
+
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println("Incorrect value! Please try again");
+            addLesson();
+        } catch (DuplicateLessonException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -81,26 +93,33 @@ public class EducationCenterMain implements Commands {
             System.out.println("Please add lesson first");
             return;
         }
-        Lesson[] lessons = chooseLessons();
-        if (lessons.length > 0) {
+        try {
+            Lesson[] lessons = chooseLessons();
+            if (lessons.length > 0) {
 
-            System.out.println("Please input student data /Name, Surname, Phone, E-mail/");
-            String studentDataStr = scanner.nextLine();
-            String[] studentData = studentDataStr.split(",");
-            Student byEmail = studentStorage.getByEmail(studentData[3]);
-            if (byEmail != null) {
-                System.out.println("Duplicate student!");
-                addStudent();
-            } else {
-                Student student = new Student();
-                student.setName(studentData[0]);
-                student.setSurname(studentData[1]);
-                student.setPhone(studentData[2]);
-                student.setEmail(studentData[3]);
-                student.setLessons(lessons);
-                studentStorage.add(student);
-                System.out.println("Thank you, Student was added.");
+                System.out.println("Please input student data /Name, Surname, Phone, E-mail/");
+                String studentDataStr = scanner.nextLine();
+                String[] studentData = studentDataStr.split(",");
+                Student byEmail = studentStorage.getByEmail(studentData[3]);
+                if (byEmail != null) {
+                    System.out.println("Duplicate student!");
+                    addStudent();
+                } else {
+                    Student student = new Student();
+                    student.setName(studentData[0]);
+                    student.setSurname(studentData[1]);
+                    student.setPhone(studentData[2]);
+                    student.setEmail(studentData[3]);
+                    student.setLessons(lessons);
+                    studentStorage.add(student);
+                    System.out.println("Thank you, Student was added.");
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            System.out.println("Invalid data, Please try again");
+            addStudent();
+        } catch (DuplicateStudentException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -113,7 +132,7 @@ public class EducationCenterMain implements Commands {
             changeStudentLessons();
         } else {
             Lesson[] lessons = chooseLessons();
-            if (lessons.length>0) {
+            if (lessons.length > 0) {
                 student.setLessons(lessons);
                 System.out.println("Student lessons are changed");
             }
