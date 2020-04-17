@@ -9,6 +9,7 @@ public interface Commands {
     int PRINT_LESSONS=4;
     int CHANGE_STUDENT_LESSON=5;
     int PRINT_STUDENTS_BY_LESSON_NAME=6;
+    int PRINT_STUDENTS_BY_GENDER=7;
 
 
 }

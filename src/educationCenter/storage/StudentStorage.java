@@ -1,6 +1,7 @@
 package educationCenter.storage;
 
 import educationCenter.exception.DuplicateStudentException;
+import educationCenter.model.Gender;
 import educationCenter.model.Lesson;
 import educationCenter.model.Student;
 
@@ -44,6 +45,24 @@ public class StudentStorage {
             }
         }
     }
+
+    public void printMaleStudents(){
+        for (int i = 0; i < size; i++) {
+            if (students[i].getGender()== Gender.MALE){
+                System.out.println(students[0]);
+            }
+        }
+    }
+
+    public void printFemaleStudents(){
+        for (int i = 0; i < size; i++) {
+            if (students[i].getGender()== Gender.FEMALE){
+                System.out.println(students[0]);
+            }
+        }
+    }
+
+
 
     public void print() {
         for (int i = 0; i < size; i++) {
